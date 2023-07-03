@@ -1,6 +1,9 @@
 # VSCode
 .vscode/
 
+# Env
+.env
+
 # NodeJS
 node_modules/
 dist/
