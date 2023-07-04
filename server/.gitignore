@@ -7,3 +7,6 @@
 # NodeJS
 node_modules/
 dist/
+
+# Yarn
+yarn-error.log
