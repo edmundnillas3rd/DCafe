@@ -6,6 +6,7 @@ interface User {
   password: string;
   profileUrl: string;
   subscribers: number;
+  username: string;
 }
 
 interface Video {
