@@ -9,7 +9,7 @@ import bcrypt from "bcrypt";
 
 // POST
 export async function loginUser(req: Request, res: Response) {
-  res.status(200).json({ message: "Successfully login " });
+  res.status(200).json({ message: "Successfully login" });
 }
 
 export async function logoutUser(
@@ -25,23 +25,23 @@ export async function logoutUser(
 }
 
 export async function signupUser(req: Request, res: Response) {
-  const { email, firstName, lastName, password, profileUrl, username }: User =
+  const { username, firstName, lastName, email, password, profileUrl }: User =
     req.body;
   const subscribers = 0;
 
   const hashedPassword = await bcrypt.hash(password, 10);
 
   const values = [
-    email,
+    username,
     firstName,
     lastName,
+    email,
     hashedPassword,
-    profileUrl,
     subscribers,
-    username,
+    profileUrl,
   ];
 
-  const queryString = `INSERT INTO users(email, first_name, last_name, password, profile_url, subscribers, username) VALUES($1, $2, $3, $4, $5, $6, $7) RETURNING *`;
+  const queryString = `INSERT INTO users(user_id, username, first_name, last_name, email, password, subscribers, profile_url) VALUES(gen_random_uuid(), $1, $2, $3, $4, $5, $6, $7) RETURNING *`;
   const results = await pool.query(queryString, values);
   res.status(200).json(results.rows[0]);
 }

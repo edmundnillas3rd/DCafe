@@ -1,12 +1,12 @@
 interface User {
   id?: string;
-  email: string;
+  username: string;
   firstName: string;
   lastName: string;
+  email: string;
   password: string;
-  profileUrl: string;
   subscribers: number;
-  username: string;
+  profileUrl: string;
 }
 
 interface Video {
