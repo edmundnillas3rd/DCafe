@@ -4,7 +4,7 @@ import session from "express-session";
 import cors from "cors";
 import dotenv from "dotenv";
 
-import { getUsers } from "./controllers/userController";
+import { addUser, getUsers } from "./controllers/userController";
 
 dotenv.config();
 
@@ -40,6 +40,7 @@ const main = async () => {
     res.status(200).json("DCafe API");
   });
   app.get("/users", getUsers);
+  app.post("/add-user", addUser);
 
   app.listen(port, () => {
     console.log(`Server is running at port: ${port}`);
