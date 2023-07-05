@@ -3,8 +3,10 @@ import cookieParser from "cookie-parser";
 import session from "express-session";
 import cors from "cors";
 import dotenv from "dotenv";
+import passport from "passport";
 
-import { addUser, getUsers } from "./controllers/userController";
+import userRouter from "./routes/user";
+import initializePassportjs from "./utils/auth";
 
 dotenv.config();
 
@@ -36,11 +38,14 @@ const main = async () => {
     })
   );
 
+  app.use(passport.authenticate("session"));
+  initializePassportjs(passport);
+
   app.get("/", (req: Request, res: Response) => {
     res.status(200).json("DCafe API");
   });
-  app.get("/users", getUsers);
-  app.post("/add-user", addUser);
+
+  app.use("/v1/auth", userRouter);
 
   app.listen(port, () => {
     console.log(`Server is running at port: ${port}`);
