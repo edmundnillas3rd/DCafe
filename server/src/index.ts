@@ -7,6 +7,7 @@ import passport from "passport";
 
 import userRouter from "./routes/user";
 import initializePassportjs from "./utils/auth";
+import initializeCloudinary from "./utils/cloudinaryConfig";
 
 dotenv.config();
 
@@ -40,12 +41,16 @@ const main = async () => {
 
   app.use(passport.authenticate("session"));
   initializePassportjs(passport);
+  initializeCloudinary();
 
   app.get("/", (req: Request, res: Response) => {
     res.status(200).json("DCafe API");
   });
 
   app.use("/v1/auth", userRouter);
+
+  // TODO: make work of the video route, upload video through array buffers
+  // app.use("/v1/video", )
 
   app.listen(port, () => {
     console.log(`Server is running at port: ${port}`);
