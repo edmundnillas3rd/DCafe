@@ -6,6 +6,8 @@ import dotenv from "dotenv";
 import passport from "passport";
 
 import userRouter from "./routes/user";
+import videoRouter from "./routes/video";
+
 import initializePassportjs from "./utils/auth";
 import initializeCloudinary from "./utils/cloudinaryConfig";
 
@@ -16,6 +18,8 @@ const port = process.env.PORT;
 
 const main = async () => {
   app.use(express.json());
+  app.use(express.raw({ type: "video/mp4" }));
+  app.use(express.raw());
   app.use(express.urlencoded({ extended: false }));
 
   app.use(
@@ -48,9 +52,7 @@ const main = async () => {
   });
 
   app.use("/v1/auth", userRouter);
-
-  // TODO: make work of the video route, upload video through array buffers
-  // app.use("/v1/video", )
+  app.use("/v1/video", videoRouter);
 
   app.listen(port, () => {
     console.log(`Server is running at port: ${port}`);
