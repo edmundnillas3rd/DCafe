@@ -1,12 +1,11 @@
-import multer from "multer";
 import express from "express";
 
 import { uploadVideo } from "../controllers/videoController";
-import { upload } from "../utils/multerConfig";
+import { uploadArray } from "../utils/multerConfig";
 
 const router = express.Router();
 
 // POST
-router.post("/video-content", upload, uploadVideo);
+router.post("/:userID/video-content", uploadArray, uploadVideo);
 
 export default router;
