@@ -16,6 +16,9 @@ interface Video {
   url: string;
   uploadDate: string;
   userID: string;
+  likes: number;
+  dislikes: number;
+  views: number;
 }
 
 interface Library {
