@@ -67,25 +67,22 @@ export async function uploadVideo(req: Request, res: Response) {
       break;
   }
 
-  let thumbnailResponse, videoResponse;
-
-  let responseValues: any = [];
-
+  let responseValues: any;
   try {
-    thumbnailResponse = getUploadResponse(
+    const thumbnailResponse = getUploadResponse(
       thumbnailData,
       files[0]?.originalname,
       `video_thumbnails/${userID}`
     );
 
-    videoResponse = getUploadResponse(
+    const videoResponse = getUploadResponse(
       videoBuffer,
       files[1]?.originalname,
       `videos/${userID}`,
       files[1].mimetype === "video/mp4"
     );
 
-    responseValues = await Promise.all([thumbnailResponse, videoResponse]);
+    responseValues = await Promise.all([thumbnailResponse, videoResponse])
   } catch (error) {
     console.error(error);
   }
@@ -93,31 +90,25 @@ export async function uploadVideo(req: Request, res: Response) {
   const thumbnailUrl = responseValues[0]?.public_id;
   const videoUrl = responseValues[1]?.public_id;
 
-  const likes = 0,
-    dislikes = 0,
-    views = 0;
-
   const videoValues = [
     name,
     thumbnailUrl,
     videoUrl,
     uploadDate,
     userID,
-    likes,
-    dislikes,
-    views,
   ];
 
   const results = await pool.query(
-    `INSERT INTO videos (video_id, video_name, video_thumbnail_url, video_url, video_upload_date, user_id, video_likes, video_dislikes, video_views) 
-     VALUES (gen_random_uuid(), $1, $2, $3, $4, $5, $6, $7, $8)
-     RETURNING (video_name)
+    `
+    INSERT INTO videos (video_id, video_name, video_thumbnail_url, video_url, video_upload_date, user_id)
+    VALUES (gen_random_uuid(), $1, $2, $3, $4, $5)
+    RETURNING (video_name)
     `,
     videoValues
   );
 
   if (results?.rows.length !== 0) {
-    res.status(200).json({ video_name: results.rows[0].video_name });
+    res.status(200).json(results.rows[0]);
   }
 }
 
