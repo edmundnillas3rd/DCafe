@@ -15,13 +15,20 @@ const bufferToStream = (buffer: any) => {
   return readable;
 };
 
-const getUploadResponse = async (data: any, folder: string): Promise<any> => {
+const getUploadResponse = async (
+  data: any,
+  filename: string,
+  folder: string,
+  isVideo: boolean = false
+): Promise<any> => {
   return new Promise((resolve, reject) => {
     let response = cloudinary.uploader.upload_chunked_stream(
       {
         folder: folder,
-        timeout: 1000 * 60 * 2,
-        resource_type: "raw",
+        public_id: filename,
+        chunk_size: 600000000,
+        timeout: 1000 * 60 * 30,
+        resource_type: `${isVideo ? "video" : "image"}`,
       },
       (error, result) => {
         if (error) {
@@ -61,15 +68,24 @@ export async function uploadVideo(req: Request, res: Response) {
   }
 
   let thumbnailResponse, videoResponse;
+
   try {
     thumbnailResponse = await getUploadResponse(
       thumbnailData,
-      "video_thumbnails"
+      files[0]?.originalname,
+      `video_thumbnails/${userID}`
     );
-    videoResponse = await getUploadResponse(videoBuffer, "videos");
+
+    videoResponse = await getUploadResponse(
+      videoBuffer,
+      files[1]?.originalname,
+      `videos/${userID}`,
+      files[1].mimetype === "video/mp4"
+    );
   } catch (error) {
     console.error(error);
   }
+
   const thumbnailUrl = thumbnailResponse?.public_id;
   const videoUrl = videoResponse?.public_id;
 
@@ -100,3 +116,5 @@ export async function uploadVideo(req: Request, res: Response) {
     res.status(200).json({ video_name: results.rows[0].video_name });
   }
 }
+
+export async function getVideos() {}
