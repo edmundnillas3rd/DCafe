@@ -26,7 +26,7 @@ const getUploadResponse = async (
       {
         folder: folder,
         public_id: filename,
-        chunk_size: 6000000,
+        chunk_size: 600000000,
         timeout: 1000 * 60 * 30,
         resource_type: `${isVideo ? "video" : "image"}`,
       },
@@ -82,21 +82,21 @@ export async function uploadVideo(req: Request, res: Response) {
       files[1].mimetype === "video/mp4"
     );
 
-    responseValues = await Promise.all([thumbnailResponse, videoResponse])
-  } catch (error) {
-    console.error(error);
+    responseValues = await Promise.all([thumbnailResponse, videoResponse]);
+  } catch (error: any) {
+    switch (error?.http_code) {
+      case 400:
+        res.status(400).json(error);
+        break;
+      default:
+        break;
+    }
   }
 
   const thumbnailUrl = responseValues[0]?.public_id;
   const videoUrl = responseValues[1]?.public_id;
 
-  const videoValues = [
-    name,
-    thumbnailUrl,
-    videoUrl,
-    uploadDate,
-    userID,
-  ];
+  const videoValues = [name, thumbnailUrl, videoUrl, uploadDate, userID];
 
   const results = await pool.query(
     `
