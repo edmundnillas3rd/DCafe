@@ -1,9 +1,10 @@
 import { Readable } from "stream";
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import { v2 as cloudinary } from "cloudinary";
 import sharp from "sharp";
 
 import pool from "../utils/database";
+import Videos from "../lib/Videos";
 
 const bufferToStream = (buffer: any) => {
   const readable = new Readable({
@@ -112,4 +113,19 @@ export async function uploadVideo(req: Request, res: Response) {
   }
 }
 
-export async function getVideos() {}
+// TODO: site should fetch the data at root url
+export async function getVideos(
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
+  
+  if (Videos.getVideos().length) {
+    res.status(200).json([...Videos.getVideos()]);
+    next();
+  }
+
+  const videos = await pool.query("SELECT * FROM videos");
+  Videos.setVideos([...videos.rows]);
+  res.status(200).json(videos.rows);
+}

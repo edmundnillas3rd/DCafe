@@ -47,10 +47,6 @@ const main = async () => {
   initializePassportjs(passport);
   initializeCloudinary();
 
-  app.get("/", (req: Request, res: Response) => {
-    res.status(200).json("DCafe API");
-  });
-
   app.use("/v1/auth", userRouter);
   app.use("/v1/video", videoRouter);
 
