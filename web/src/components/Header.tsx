@@ -9,16 +9,13 @@ export default function Headers() {
   };
 
   return (
-    <nav
-      className="d-flex navbar navbar-expand-lg bg-dark "
-      data-bs-theme="dark"
-    >
+    <nav className="d-flex navbar navbar-expand-lg">
       <div className="container-fluid">
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <ul className="navbar-nav me-auto mb-2 mb-lg-0">
             <li className="container">
               <a className="d-flex navbar-brand" href="#">
-                <img src="/public/logo.png" alt="logo" width={30} height={30} />
+                <img src="/logo.png" alt="logo" width={30} height={30} />
                 DCafe
               </a>
             </li>
