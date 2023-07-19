@@ -1,8 +1,57 @@
 import { AiOutlineSearch } from "react-icons/ai";
 import { FiSettings } from "react-icons/fi";
 import { IoIosNotificationsOutline } from "react-icons/io";
+import { BiLibrary } from "react-icons/bi"
 import { CgProfile } from "react-icons/cg";
 import { GiHamburgerMenu } from "react-icons/gi";
+import { BsHouseDoorFill } from "react-icons/bs";
+import { GoPeople } from "react-icons/go";
+import { type ReactElement } from "react";
+
+type Props = {
+  name?: string;
+  icon?: ReactElement<any>;
+  size?: string;
+};
+
+const Item = ({ name, icon }: Props) => {
+  return (
+    <button className="d-flex align-items-center gap-2 p-2 border border-0 bg-transparent">
+      {icon}
+      <div>{name}</div>
+    </button>
+  );
+};
+
+const Drawer = ({ size }: Props) => (
+  <div
+    className="offcanvas offcanvas-start"
+    tabIndex={-1}
+    id="offcanvasSidenav"
+    aria-labelledby="offcanvasSidenavLabel"
+  >
+    <div className="offcanvas-header">
+      <button
+        className="btn btn-primary d-flex justify-content-center align-items-center border border-0 bg-transparent"
+        type="button"
+        data-bs-dismiss="offcanvas"
+        aria-label="Close"
+      >
+        <GiHamburgerMenu size={size} />
+      </button>
+      <a className="d-flex gap-2 navbar-brand me-auto" href="#">
+        <img src="/logo.png" alt="logo" width={30} height={30} />
+        <p className="offcanvas-title">DCafe</p>
+      </a>
+    </div>
+
+    <div className="offcanvas-body">
+      <Item name={"Home"} icon={<BsHouseDoorFill size={size} />} />
+      <Item name={"Subscriptions"} icon={<GoPeople size={size} />} />
+      <Item name={"Library"} icon={<BiLibrary size={size} />} />
+    </div>
+  </div>
+);
 
 export default function Headers() {
   const iconProps = {
@@ -11,27 +60,7 @@ export default function Headers() {
 
   return (
     <>
-      <div
-        className="offcanvas offcanvas-start"
-        tabIndex={-1}
-        id="offcanvasSidenav"
-        aria-labelledby="offcanvasSidenavLabel"
-      >
-        <div className="offcanvas-header">
-          <button
-            className="btn btn-primary d-flex justify-content-center align-items-center border border-0 bg-transparent"
-            type="button"
-            data-bs-dismiss="offcanvas"
-            aria-label="Close"
-          >
-            <GiHamburgerMenu {...iconProps} />
-          </button>
-          <a className="d-flex gap-2 navbar-brand me-auto" href="#">
-            <img src="/logo.png" alt="logo" width={30} height={30} />
-            <p className="offcanvas-title">DCafe</p>
-          </a>
-        </div>
-      </div>
+      <Drawer {...iconProps} />
       <nav className="d-flex navbar navbar-expand-lg">
         <div className="container-fluid">
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
@@ -46,7 +75,10 @@ export default function Headers() {
                 >
                   <GiHamburgerMenu {...iconProps} />
                 </button>
-                <a className="d-flex align-items-center gap-2 navbar-brand" href="#">
+                <a
+                  className="d-flex align-items-center gap-2 navbar-brand"
+                  href="#"
+                >
                   <img src="/logo.png" alt="logo" width={30} height={30} />
                   DCafe
                 </a>
