@@ -1,18 +1,13 @@
 import { AiOutlineSearch } from "react-icons/ai";
 import { FiSettings } from "react-icons/fi";
 import { IoIosNotificationsOutline } from "react-icons/io";
-import { BiLibrary } from "react-icons/bi"
+import { BiLibrary } from "react-icons/bi";
 import { CgProfile } from "react-icons/cg";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { BsHouseDoorFill } from "react-icons/bs";
 import { GoPeople } from "react-icons/go";
-import { type ReactElement } from "react";
-
-type Props = {
-  name?: string;
-  icon?: ReactElement<any>;
-  size?: string;
-};
+import { Props } from "../types";
+import SubscribePanel from "./SubscribePanel";
 
 const Item = ({ name, icon }: Props) => {
   return (
@@ -49,6 +44,13 @@ const Drawer = ({ size }: Props) => (
       <Item name={"Home"} icon={<BsHouseDoorFill size={size} />} />
       <Item name={"Subscriptions"} icon={<GoPeople size={size} />} />
       <Item name={"Library"} icon={<BiLibrary size={size} />} />
+      <hr />
+      <div className="d-flex flex-column gap-2">
+        <SubscribePanel name={"Lorem ipsum"} />
+        <SubscribePanel name={"Lorem ipsum"} />
+        <SubscribePanel name={"Lorem ipsum"} />
+        <SubscribePanel name={"Lorem ipsum"} />
+      </div>
     </div>
   </div>
 );
