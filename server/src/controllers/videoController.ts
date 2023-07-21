@@ -119,19 +119,19 @@ export async function getVideos(
   res: Response,
   next: NextFunction
 ) {
-  
   if (Videos.getVideos().length) {
     res.status(200).json(Videos.getVideos());
-    next();``
+    next();
   }
 
   const results = await pool.query("SELECT * FROM videos");
 
-  const videos = results.rows.map(r => ({
+  const videos = results.rows.map((r) => ({
     ...r,
     video_url: cloudinary.url(r.video_url),
-    video_thumbnail_url: cloudinary.url(r.video_thumbnail_url)
-  }))
+    video_thumbnail_url: cloudinary.url(r.video_thumbnail_url),
+  }));
+
   Videos.setVideos(videos);
   res.status(200).json(videos);
 }
