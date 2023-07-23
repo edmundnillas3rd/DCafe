@@ -146,3 +146,13 @@ export async function getVideos(
   Videos.setVideos(videos);
   res.status(200).json(videos);
 }
+
+export async function getVideo(
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
+  const { videoID } = req.params;
+  let result = Videos.getVideos().filter((video) => video.video_id === videoID);
+  res.status(200).json(result[0]);
+}
