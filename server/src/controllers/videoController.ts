@@ -94,8 +94,8 @@ export async function uploadVideo(req: Request, res: Response) {
     }
   }
 
-  const thumbnailUrl = responseValues[0]?.public_id;
-  const videoUrl = responseValues[1]?.public_id;
+  const thumbnailUrl = responseValues[0]?.secure_url;
+  const videoUrl = responseValues[1]?.secure_url;
 
   const videoValues = [name, thumbnailUrl, videoUrl, uploadDate, userID];
 
