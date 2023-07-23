@@ -94,15 +94,26 @@ export async function uploadVideo(req: Request, res: Response) {
     }
   }
 
+  const thumbnailPublicId = responseValues[0]?.public_id;
   const thumbnailUrl = responseValues[0]?.secure_url;
+
+  const videoPublicId = responseValues[1]?.public_id;
   const videoUrl = responseValues[1]?.secure_url;
 
-  const videoValues = [name, thumbnailUrl, videoUrl, uploadDate, userID];
+  const videoValues = [
+    name,
+    thumbnailUrl,
+    videoUrl,
+    uploadDate,
+    userID,
+    thumbnailPublicId,
+    videoPublicId,
+  ];
 
   const results = await pool.query(
     `
-    INSERT INTO videos (video_id, video_name, video_thumbnail_url, video_url, video_upload_date, user_id)
-    VALUES (gen_random_uuid(), $1, $2, $3, $4, $5)
+    INSERT INTO videos (video_id, video_name, video_thumbnail_url, video_url, video_upload_date, user_id, video_thumbnail_public_id, video_public_id)
+    VALUES (gen_random_uuid(), $1, $2, $3, $4, $5, $6, $7)
     RETURNING (video_name)
     `,
     videoValues
