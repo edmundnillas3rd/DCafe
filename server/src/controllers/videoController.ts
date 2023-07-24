@@ -130,21 +130,28 @@ export async function getVideos(
   res: Response,
   next: NextFunction
 ) {
+  let results = null;
+
   if (Videos.getVideos().length) {
-    res.status(200).json(Videos.getVideos());
-    next();
+    results = Videos.getVideos();
   }
 
-  const results = await pool.query("SELECT * FROM videos");
+  const queryResults = await pool.query("SELECT * FROM videos");
 
-  const videos = results.rows.map((r) => ({
+  const videos = queryResults.rows.map((r) => ({
     ...r,
     video_url: cloudinary.url(r.video_url),
     video_thumbnail_url: cloudinary.url(r.video_thumbnail_url),
   }));
 
-  Videos.setVideos(videos);
-  res.status(200).json(videos);
+  if (videos.length) {
+    results = videos;
+  } else {
+    results = [];
+  }
+  
+  Videos.setVideos(results);
+  res.status(200).json(results);
 }
 
 export async function getVideo(
