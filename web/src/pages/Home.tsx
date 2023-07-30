@@ -31,6 +31,7 @@ export default function Home() {
               video_url={v.video_url}
               video_upload_date={v.video_upload_date}
               user_id={v.user_id}
+              username={v.username}
               video_likes={v.video_likes}
               video_dislikes={v.video_dislikes}
               video_views={v.video_views}

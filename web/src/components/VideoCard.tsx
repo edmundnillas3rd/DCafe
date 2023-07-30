@@ -8,6 +8,7 @@ export default function VideoCard({
   video_id,
   video_upload_date,
   user_id,
+  username,
   video_likes,
   video_dislikes,
   video_views,
@@ -25,7 +26,7 @@ export default function VideoCard({
       <img className="w-100 h-100" src={video_thumbnail_url} alt={video_name} />
       <div className="w-100 h-100 d-flex flex-column text-break">
         <p className="fw-bold m-0">{video_name}</p>
-        <p className="m-0">{user_id}</p>
+        <p className="m-0">{username}</p>
       </div>
 
       <div className="w-100 h-100 d-flex gap-1">
