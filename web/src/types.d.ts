@@ -15,6 +15,7 @@ export type Video = {
   video_url: string;
   video_upload_date: string;
   user_id: string;
+  username: string;
   video_likes: number;
   video_dislikes: number;
   video_views: number;
