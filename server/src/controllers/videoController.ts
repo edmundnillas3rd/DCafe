@@ -136,7 +136,9 @@ export async function getVideos(
     results = Videos.getVideos();
   }
 
-  const queryResults = await pool.query("SELECT * FROM videos");
+  const queryResults = await pool.query(
+    "SELECT * FROM videos LEFT JOIN users ON videos.user_id = users.user_id"
+  );
 
   const videos = queryResults.rows.map((r) => ({
     ...r,
@@ -149,7 +151,7 @@ export async function getVideos(
   } else {
     results = [];
   }
-  
+
   Videos.setVideos(results);
   res.status(200).json(results);
 }
