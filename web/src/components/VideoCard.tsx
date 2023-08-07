@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { Video } from "../types";
+import moment from "moment";
 
 export default function VideoCard({
   video_name,
@@ -18,22 +19,26 @@ export default function VideoCard({
   return (
     <Link
       to={video_url}
-      className="d-flex w-25 flex-wrap flex-column gap-2 text-reset link-underline link-underline-opacity-0"
-      style={{
-        width: `300px`,
-      }}
+      className="video-card card link-underline link-underline-opacity-0 px-0"
     >
-      <img className="w-100 h-100" src={video_thumbnail_url} alt={video_name} />
-      <div className="w-100 h-100 d-flex flex-column text-break">
-        <p className="fw-bold m-0">{video_name}</p>
-        <p className="m-0">{username}</p>
-      </div>
-
-      <div className="w-100 h-100 d-flex gap-1">
-        <p className="m-0">
-          {video_views} {video_views > 0 ? "Views" : "View"}
-        </p>
-        | <p>{video_upload_date}</p>
+      <img
+        className="card-img-top"
+        src={video_thumbnail_url}
+        alt={video_name}
+      />
+      <div className="p-2">
+        <div className="card=body">
+          <h5 className="card-title">{video_name}</h5>
+          <p className="card-text">{username}</p>
+        </div>
+        <div className="card-body flex-wrap p-0 d-flex w-100 h-100 d-flex gap-1">
+          <p className="card-text">
+            {video_views} {video_views > 0 ? "Views" : "View"}
+          </p>
+          <p className="card-text">
+            {moment(video_upload_date, "YYYY-MM-DD").fromNow()}
+          </p>
+        </div>
       </div>
     </Link>
   );

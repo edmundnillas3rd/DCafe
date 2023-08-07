@@ -1,1 +1,13 @@
 @import "bootstrap/scss/bootstrap";
+
+.video-card-row {
+  @include make-row();
+}
+
+.video-card {
+  @include make-col-ready();
+
+  @include media-breakpoint-up(sm) {
+    @include make-col(4);
+  }
+}

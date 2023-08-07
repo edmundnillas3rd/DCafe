@@ -21,8 +21,9 @@ export default function Home() {
 
   return (
     <div className="container">
-        {videos.length !== 0 &&
-          videos.map((v: Video) => (
+      {videos.length !== 0 &&
+        videos.map((v: Video) => (
+          <div className="video-card-row">
             <VideoCard
               key={v.video_id}
               video_name={v.video_name}
@@ -38,7 +39,8 @@ export default function Home() {
               video_thumbnail_public_id={v.video_thumbnail_public_id}
               video_public_id={v.video_public_id}
             />
-          ))}
+          </div>
+        ))}
     </div>
   );
 }
